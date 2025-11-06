@@ -1,0 +1,141 @@
+	/* --- Gaya Dasar dan Reset --- */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #a0c49d; /* Warna tanah/lapangan */
+    color: #3c3c3c;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.game-container {
+    background-color: #f7e1d7; /* Warna papan game */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 90%;
+    max-width: 600px; /* Batasan lebar untuk responsif */
+}
+
+h1 {
+    color: #814f3b;
+    margin-bottom: 10px;
+}
+
+/* --- Papan Skor dan Tombol --- */
+.score-board {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #e5ccb2;
+    border-radius: 10px;
+}
+
+#startButton {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    background-color: #b3583d;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+#startButton:hover:not(:disabled) {
+    background-color: #d86d52;
+}
+
+#startButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* --- Grid Kotak Game --- */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 kolom sama besar */
+    gap: 15px;
+    background-color: #814f3b; /* Warna tanah area game */
+    padding: 15px;
+    border-radius: 15px;
+}
+
+/* Gaya untuk setiap Lubang (Hole) */
+.hole {
+    width: 100%;
+    /* Gunakan aspect-ratio untuk membuat kotak selalu persegi */
+    aspect-ratio: 1 / 1; 
+    background-color: #cbb49c; /* Warna lubang */
+    border-radius: 50%; /* Bentuk lubang seperti lingkaran */
+    overflow: hidden; /* Penting untuk menyembunyikan tikus */
+    position: relative;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.3);
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewport="0 0 100 100" style="fill:black;font-size:24px;"><text y="50%">🔨</text></svg>') 15 15, pointer; /* Kursor palu */
+}
+
+/* Gaya untuk Tikus (Mole) */
+.mole {
+    position: absolute;
+    top: 100%; /* Sembunyikan tikus di bawah lubang */
+    width: 100%;
+    height: 100%;
+    background: url('image/tikus.png') center / 80% no-repeat; /* Ganti dengan gambar/emoji tikus */
+    font-size: 4em; /* Ukuran emoji tikus */
+    text-align: center;
+    line-height: 1;
+    transition: top 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.27); /* Animasi muncul */
+    cursor: pointer;
+}
+
+/* Kelas saat Tikus Muncul */
+.hole.up .mole {
+    top: 10%; /* Posisi tikus muncul dari lubang */
+}
+
+/* Kelas saat Tikus Terpukul (Opsional: feedback visual) */
+.hole.whacked .mole {
+    background: url('https://i.ibb.co/hV41F0J/collision-emoji.png') center / 80% no-repeat; /* Ganti dengan gambar terpukul */
+    top: 50%;
+    opacity: 0.5;
+    transition: none; /* Hilangkan transisi agar langsung berubah */
+}
+
+
+/* --- Pesan Status Game (Menang/Kalah) --- */
+#gameStatus {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    transition: opacity 0.5s;
+}
+
+#gameStatus.win {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#gameStatus.hidden {
+    display: none;
+}
+
+/* --- Responsifitas --- */
+@media (max-width: 480px) {
+    .game-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .game-container {
+        padding: 20px;
+    }
+}
